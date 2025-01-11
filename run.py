@@ -25,10 +25,13 @@ def get_sales_data():
     """
     print("Please enter sales data from the last market.")
     print("Data should be six numbers, separated by commas.")
-    print("Example: 10,20,30,40,50,60")
+    print("Example: 10,20,30,40,50,60\n")
 
     data_str = input("Enter your data here: ")
-    print(f"The data provided is {data_str}")
+
+    # Takes the data string and splits it into a list of individual strings using the split method, separated by commas
+    sales_data = data_str.split(",") # this will remove the commas from the string
+    print(sales_data) # Returns a list. For testing purposes, can be removed later
     
-print("Script is running")
 get_sales_data()
+

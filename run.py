@@ -23,15 +23,21 @@ def get_sales_data():
     """
     Get sales figures input from the user
     """
-    print("Please enter sales data from the last market.")
-    print("Data should be six numbers, separated by commas.")
-    print("Example: 10,20,30,40,50,60\n")
+    while True: # While loop will run until the user enters the correct data
+      print("Please enter sales data from the last market.")
+      print("Data should be six numbers, separated by commas.")
+      print("Example: 10,20,30,40,50,60\n")
 
-    data_str = input("Enter your data here: ")
+      data_str = input("Enter your data here: ")
 
-    # Takes the data string and splits it into a list of individual strings using the split method, separated by commas
-    sales_data = data_str.split(",") # this will remove the commas from the string
-    validate_data(sales_data)
+      # Takes the data string and splits it into a list of individual strings using the split method, separated by commas
+      sales_data = data_str.split(",") # this will remove the commas from the string
+      validate_data(sales_data)
+
+      if validate_data(sales_data):
+          print("Data is valid!")
+          break
+    return sales_data
 
 def validate_data(values):
     """
@@ -39,7 +45,7 @@ def validate_data(values):
     Raises ValueError if strings cannot be converted into int,
     or if there aren't exactly 6 values.
     """
-    print(values)
+    # print(values) testing purposes
     try: # Try block will run the code inside it if it is successful
         [int(value) for value in values]
         if len(values) != 6:
@@ -48,8 +54,11 @@ def validate_data(values):
             )
     except ValueError as e: # If the try block fails, the except block will run error message
         print(f"Invalid data: {e}, please try again.\n")
+        return False # Returns False if the data is invalid
+
+    return True # Returns True if the data is valid which will break the while loop in the get_sales_data function
 
     
-get_sales_data()
+data = get_sales_data()
 
  

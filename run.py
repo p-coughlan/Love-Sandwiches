@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint # pprint is a module that provides a capability to “pretty-print” arbitrary Python data structures in a format that can be used as input to the interpreter.
 
 # Variable to store the scope of the API
 SCOPE = [
@@ -69,6 +70,27 @@ def update_sales_worksheet(data):
     sales_worksheet.append_row(data) # Appends the data to the sales worksheet
     print("Sales worksheet updated successfully.\n")
 
-data = get_sales_data()
-sales_data = [int(num) for num in data] # List comprehension to convert the string values into integers
-update_sales_worksheet(sales_data) # Calls the update_sales_worksheet function with the sales_data list as an argument
+def calculate_surplus_data(sales_row):
+    """
+    Compare sales with stock and calculate the surplus for each item type.
+    The surplus is defined as the sales figure subtracted from the stock figure.
+    - Positive surplus indicates waste
+    - Negative surplus indicates extra made when stock was sold out.
+    """
+    print("Calculating surplus data...\n")
+    stock = SHEET.worksheet('stock').get_all_values() # Accesses the stock worksheet and gets all the values
+    stock_row = stock[-1] # Gets the last row of the stock worksheet, -1 because the index starts at 0
+    print(stock_row)
+
+
+def main():
+    """
+    Run all program functions.
+    """
+    data = get_sales_data()
+    sales_data = [int(num) for num in data] # List comprehension to convert the string values into integers
+    update_sales_worksheet(sales_data) # Calls the update_sales_worksheet function with the sales_data list as an argument
+    calculate_surplus_data(sales_data) # Calls the calculate_surplus_data function with the sales_data list as an argument
+
+print("Welcome to Love Sandwiches Data Automation")
+main() # Calls the main function to run the program 

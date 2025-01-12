@@ -80,7 +80,13 @@ def calculate_surplus_data(sales_row):
     print("Calculating surplus data...\n")
     stock = SHEET.worksheet('stock').get_all_values() # Accesses the stock worksheet and gets all the values
     stock_row = stock[-1] # Gets the last row of the stock worksheet, -1 because the index starts at 0
-    print(stock_row)
+    
+    surplus_data = [] # Empty list to store the surplus data
+    for stock, sales in zip(stock_row, sales_row): # Uses the zip function to iterate over both lists at the same time
+        surplus = int(stock) - sales
+        surplus_data.append(surplus)
+    
+    return surplus_data
 
 
 def main():
@@ -90,7 +96,8 @@ def main():
     data = get_sales_data()
     sales_data = [int(num) for num in data] # List comprehension to convert the string values into integers
     update_sales_worksheet(sales_data) # Calls the update_sales_worksheet function with the sales_data list as an argument
-    calculate_surplus_data(sales_data) # Calls the calculate_surplus_data function with the sales_data list as an argument
-
+    new_surplus_data = calculate_surplus_data(sales_data) # Calls the calculate_surplus_data function with the sales_data list as an argument
+    print(new_surplus_data)
+    
 print("Welcome to Love Sandwiches Data Automation")
 main() # Calls the main function to run the program 

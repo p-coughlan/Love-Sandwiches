@@ -124,7 +124,22 @@ def get_last_5_entries_sales():
         # Appends the last 5 values of each column to the columns list
         columns.append(column[-5:]) # uses the slice method to get the last 5 values of each column, the colon is used to slice the list
     return columns
+
+
+def calculate_stock_data(data):
+    """
+    Calculate the average stock for each item type, adding 10%
+    """
+    print("Calculating stock data...\n")
+    new_stock_data = [] # Empty list to store the new stock data
+
+    for column in data: # For loop to iterate over the data list
+        int_column = [int(num) for num in column] # List comprehension to convert the string values into integers
+        average = sum(int_column) / len(int_column)
+        stock_num = average * 1.1
+        new_stock_data.append(round(stock_num))
     
+    return new_stock_data
 
 def main():
     """
@@ -135,9 +150,11 @@ def main():
     update_worksheet(sales_data, "sales") # Calls the update_worksheet function with the sales_data list and the sales worksheet as arguments
     new_surplus_data = calculate_surplus_data(sales_data) # Calls the calculate_surplus_data function with the sales_data list as an argument
     update_worksheet(new_surplus_data, "surplus") # Calls the update_worksheet function with the new_surplus_data list and the surplus worksheet as arguments
-    print(new_surplus_data)
+    sales_columns = get_last_5_entries_sales() # Calls the get_last_5_entries_sales function
+    stock_data = calculate_stock_data(sales_columns) # Calls the calculate_stock_data function with the sales_columns list as an argument
+    update_worksheet(stock_data, "stock") # Calls the update_worksheet function with the stock_data list and the stock worksheet as arguments
+    
+    print(stock_data) # Prints the stock data to the terminal
 
 print("Welcome to Love Sandwiches Data Automation")
-# main() # Calls the main function to run the program 
-
-sales_columns = get_last_5_entries_sales()
+main() # Calls the main function to run the program 
